@@ -20,6 +20,7 @@ import type { NotificationType, NotificationCategory } from "@/types/notificatio
 import { NOTIFICATION_CATEGORIES } from "@/types/notification";
 import { MOCK_NOTIFICATIONS } from "@/data/notifications";
 import RelativeTime from "@/components/ui/RelativeTime";
+import { useUndoableRemoval } from "@/hooks/useUndoableRemoval";
 
 const TYPE_CONFIG: Record<
   NotificationType,

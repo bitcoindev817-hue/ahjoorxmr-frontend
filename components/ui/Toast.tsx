@@ -10,6 +10,8 @@ export type ToastVariant = "success" | "error" | "warning" | "info";
 export interface ToastAction {
   label: string;
   onClick: () => void;
+  /** Called when the toast is auto-dismissed without the action being clicked. */
+  onCommit?: () => void;
 }
 
 export interface ToastInput {
@@ -76,12 +78,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     // Track whether the action was triggered so we can skip onCommit.
     let actionTriggered = false;
     if (toast.action) {
-      const originalOnAction = toast.action.onAction;
+      const originalOnClick = toast.action.onClick;
       nextToast.action = {
         ...toast.action,
-        onAction: () => {
+        onClick: () => {
           actionTriggered = true;
-          originalOnAction();
+          originalOnClick();
           // Dismiss the toast immediately
           setToasts((current) =>
             current.map((item) =>

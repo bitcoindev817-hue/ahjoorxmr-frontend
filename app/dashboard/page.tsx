@@ -15,6 +15,7 @@ import SavingsGoalsWidget from "@/components/dashboard/SavingsGoalsWidget";
 import TrustlineBanner from "@/components/wallet/TrustlineBanner";
 import { useNetworkGuard } from "@/hooks/useNetworkGuard";
 import { useToast } from "@/components/ui/Toast";
+import { useReconnectRefresh } from "@/contexts/ConnectionStatusContext";
 
 interface PendingTx {
   type: TxType;

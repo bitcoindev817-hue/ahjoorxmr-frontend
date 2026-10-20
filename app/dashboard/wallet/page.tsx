@@ -21,7 +21,7 @@ import { useWallet, truncateAddress, AVAILABLE_WALLETS } from "@/contexts/Wallet
 import AddressBookSection from "@/components/wallet/AddressBookSection";
 import SendTransferModal from "@/components/wallet/SendTransferModal";
 import TwoFactorChallengeModal from "@/components/settings/TwoFactorChallengeModal";
-import LowBalanceAlertBanner, { LowBalanceAlertSettings } from "@/components/wallet/LowBalanceAlert";
+import { LowBalanceAlertBanner, LowBalanceAlertSettings } from "@/components/wallet/LowBalanceAlert";
 import { isTwoFactorEnabled } from "@/lib/twoFactor";
 import BalanceBreakdownWidget from "@/components/wallet/BalanceBreakdownWidget";
 
