@@ -27,7 +27,6 @@ export interface ToastItem extends Required<Pick<ToastInput, "title">> {
   variant: ToastVariant;
   action?: ToastAction;
   phase: "entering" | "visible" | "leaving";
-  action?: ToastAction;
 }
 
 export interface ToastContextValue {
@@ -73,7 +72,6 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       variant: toast.variant ?? "info",
       action: toast.action,
       phase: "entering",
-      action: toast.action,
     };
     // Track whether the action was triggered so we can skip onCommit.
     let actionTriggered = false;

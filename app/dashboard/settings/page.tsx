@@ -397,10 +397,6 @@ function SettingsContent() {
             <HighContrastToggle />
           </section>
 
-              {/* High Contrast Toggle */}
-              <HighContrastToggle />
-            </section>
-          </div>
           <AccountDataExport />
         </div>
       )}
