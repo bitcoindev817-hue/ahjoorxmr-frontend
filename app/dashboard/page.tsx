@@ -2,8 +2,8 @@
 
 import { useMemo, useState, useEffect } from "react";
 import { ArrowUpRight, Users, CheckCircle2, DollarSign, GripHorizontal, EyeOff, ArrowUp, ArrowDown, Settings2, RotateCcw, Plus } from "lucide-react";
+import dynamic from "next/dynamic";
 import SavingsCard from "@/components/cards/SavingsCard";
-import SavingsGrowthChart from "@/components/charts/SavingsGrowthChart";
 import UpcomingPayoutsCalendar from "@/components/dashboard/UpcomingPayoutsCalendar";
 import RecentAchievementCard from "@/components/dashboard/RecentAchievementCard";
 import TxConfirmModal, { TxType, type TxAttempt, type TxFailure } from "@/components/modals/TxConfirmModal";
@@ -16,6 +16,21 @@ import TrustlineBanner from "@/components/wallet/TrustlineBanner";
 import { useNetworkGuard } from "@/hooks/useNetworkGuard";
 import { useToast } from "@/components/ui/Toast";
 import { useReconnectRefresh } from "@/contexts/ConnectionStatusContext";
+
+// The chart is only visible once the dashboard layout is rendered, so it is
+// loaded on demand instead of being part of the page's initial bundle.
+const SavingsGrowthChart = dynamic(
+  () => import("@/components/charts/SavingsGrowthChart"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="h-64 rounded-2xl bg-[var(--content)] border border-[var(--ov-10)] animate-pulse"
+        aria-hidden="true"
+      />
+    ),
+  }
+);
 
 interface PendingTx {
   type: TxType;

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Download, FileText, Printer } from "lucide-react";
-import { buildFilename, exportCsv, exportPdf } from "@/lib/export";
+import { buildFilename, exportCsv } from "@/lib/export";
 import { buildMonthlyStatement, getActiveMonths, statementToExportRows } from "@/lib/statements";
 
 const money = (n: number) => `$${n.toFixed(2)}`;
@@ -20,11 +20,15 @@ export default function StatementsPage() {
   const title = `Account statement — ${monthLabel(month)}`;
 
   function downloadPdf() {
-    exportPdf(
-      statementToExportRows(statement),
-      title,
-      `Opening ${money(statement.openingBalance)} · Contributions ${money(statement.contributions)} · Payouts ${money(statement.payouts)} · Penalties ${money(statement.penalties)} · Closing ${money(statement.closingBalance)}`
-    );
+    // The printable-document code is only needed for a PDF download, so it is
+    // pulled in on demand instead of shipping with the page.
+    void import("@/lib/exportPdf").then(({ exportPdf }) => {
+      exportPdf(
+        statementToExportRows(statement),
+        title,
+        `Opening ${money(statement.openingBalance)} · Contributions ${money(statement.contributions)} · Payouts ${money(statement.payouts)} · Penalties ${money(statement.penalties)} · Closing ${money(statement.closingBalance)}`
+      );
+    });
   }
 
   const summary = [

@@ -79,6 +79,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | `pnpm build` | Builds the app for production. |
 | `pnpm start` | Runs the production build (run `pnpm build` first). |
 | `pnpm lint` | Runs ESLint across the codebase. |
+| `pnpm analyze` | Builds with the bundle analyzer and writes a treemap of every client chunk to `.next/analyze/`. See [Bundle analysis](docs/bundle-analysis.md). |
+| `pnpm analyze:turbopack` | Serves the native Next.js bundle analyzer for an existing build. |
 
 ---
 
@@ -149,6 +151,7 @@ We use **Conventional Commits** to standardize commit messages.
 - [Stellar Documentation](https://developers.stellar.org/)
 - [Soroban Smart Contracts](https://soroban.stellar.org/)
 - [Stellar CLI Reference](https://developers.stellar.org/docs/tools/developer-tools)
+- [Bundle analysis](docs/bundle-analysis.md) — how to inspect what ships to the browser, and the current baseline
 
 ---
 

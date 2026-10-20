@@ -3,7 +3,23 @@
 import { use, useMemo, useState } from "react";
 import { ArrowLeft, BarChart3, TrendingUp, Users, DollarSign } from "lucide-react";
 import Link from "next/link";
-import ContributionFiatValueChart, { type ContributionRecord } from "@/components/charts/ContributionFiatValueChart";
+import dynamic from "next/dynamic";
+import type { ContributionRecord } from "@/components/charts/ContributionFiatValueChart";
+
+// The chart is only visible once the analytics have loaded, so it is loaded
+// on demand instead of being part of the page's initial bundle.
+const ContributionFiatValueChart = dynamic(
+  () => import("@/components/charts/ContributionFiatValueChart"),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="h-64 rounded-2xl bg-[var(--content)] border border-[var(--ov-10)] animate-pulse"
+        aria-hidden="true"
+      />
+    ),
+  }
+);
 
 interface Round {
   round: number;

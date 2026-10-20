@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { Download, FileText, Sheet } from "lucide-react";
 import {
   exportCsv,
-  exportPdf,
   buildFilename,
   type ExportRow,
 } from "@/lib/export";
@@ -51,7 +50,7 @@ export default function ExportButton({
     };
   }, [open]);
 
-  function runExport(format: "csv" | "pdf") {
+  async function runExport(format: "csv" | "pdf") {
     setOpen(false);
     setBusy(true);
     // Yield a frame so the menu closes and the button paints its busy state
@@ -66,11 +65,15 @@ export default function ExportButton({
           const stamp = new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",
           }).format(now);
-          exportPdf(
-            rows,
-            title,
-            `${scope} · ${rows.length} record${rows.length === 1 ? "" : "s"} · Exported ${stamp}`
-          );
+          // The printable-document code is only needed for a PDF download, so
+          // it is pulled in on demand instead of shipping with the page.
+          void import("@/lib/exportPdf").then(({ exportPdf }) => {
+            exportPdf(
+              rows,
+              title,
+              `${scope} · ${rows.length} record${rows.length === 1 ? "" : "s"} · Exported ${stamp}`
+            );
+          });
         }
       } finally {
         setBusy(false);

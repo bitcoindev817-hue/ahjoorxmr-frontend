@@ -1,5 +1,4 @@
 import * as OTPAuth from "otpauth";
-import QRCode from "qrcode";
 
 const ISSUER = "Ahjoor";
 
@@ -55,6 +54,9 @@ export async function startTwoFactorSetup(accountLabel: string): Promise<Pending
     secret,
   });
   const uri = totp.toString();
+  // The QR encoder is only needed while setting up 2FA, so it is loaded on
+  // demand rather than shipping with every page that touches this module.
+  const { default: QRCode } = await import("qrcode");
   const qrDataUrl = await QRCode.toDataURL(uri, { margin: 1, width: 220 });
   return { secret: secret.base32, uri, qrDataUrl };
 }
