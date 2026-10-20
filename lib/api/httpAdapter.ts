@@ -4,15 +4,13 @@
  */
 
 import type { ApiClient } from "./client";
+import { env } from "@/lib/env";
 import type { DiscoverCircle } from "@/data/circles";
 import type { ContributionRecord } from "@/types/contribution";
 import type { PayoutRecord } from "@/data/payouts";
 import type { Notification } from "@/types/notification";
 
-const BASE_URL =
-  typeof process !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL ?? "")
-    : "";
+const BASE_URL = env.NEXT_PUBLIC_API_URL;
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`);

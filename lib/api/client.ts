@@ -7,6 +7,7 @@
  */
 
 import type { DiscoverCircle } from "@/data/circles";
+import { env } from "@/lib/env";
 import type { ContributionRecord } from "@/types/contribution";
 import type { PayoutRecord } from "@/data/payouts";
 import type { Notification } from "@/types/notification";
@@ -24,11 +25,7 @@ export interface ApiClient {
 }
 
 function resolveAdapter(): ApiClient {
-  const flag =
-    typeof process !== "undefined"
-      ? process.env.NEXT_PUBLIC_API_ADAPTER
-      : undefined;
-  return flag === "http" ? httpAdapter : mockAdapter;
+  return env.apiAdapter === "http" ? httpAdapter : mockAdapter;
 }
 
 export const apiClient: ApiClient = resolveAdapter();

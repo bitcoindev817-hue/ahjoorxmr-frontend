@@ -3,7 +3,9 @@ export type ConnectionStatus = "connected" | "reconnecting" | "offline";
 // Endpoint the heartbeat pings. Defaults to the app origin so no backend
 // changes are required; point it at a real health route (or the websocket
 // gateway's HTTP health check) once one exists.
-export const HEARTBEAT_URL = process.env.NEXT_PUBLIC_HEARTBEAT_URL ?? "/";
+import { env } from "@/lib/env";
+
+export const HEARTBEAT_URL = env.NEXT_PUBLIC_HEARTBEAT_URL;
 
 export const HEARTBEAT_INTERVAL_MS = 30_000;
 export const HEARTBEAT_TIMEOUT_MS = 5_000;

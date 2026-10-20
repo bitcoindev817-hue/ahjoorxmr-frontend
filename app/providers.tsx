@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { WalletProvider } from "@/contexts/WalletContext";
+import { env } from "@/lib/env";
 import { ToastProvider } from "@/components/ui/Toast";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import NetworkMismatchModal from "@/components/wallet/NetworkMismatchModal";
@@ -285,7 +286,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           </WalletProvider>
         </DensityProvider>
       </ThemeProvider>
-      {process.env.NODE_ENV === "development" && (
+      {env.NODE_ENV === "development" && (
         <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
       )}
     </QueryClientProvider>

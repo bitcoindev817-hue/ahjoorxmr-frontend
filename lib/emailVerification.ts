@@ -7,6 +7,8 @@
  * Swap sendVerificationEmail's internals for a real API call once one exists.
  */
 
+import { env } from "@/lib/env";
+
 const STORAGE_KEY = "ahjoor:email-verification";
 
 // Same-tab components need a signal when localStorage changes — the native
@@ -129,7 +131,7 @@ export function getResendCooldownMs(): number {
 /** Dev-only: exposes the link that would otherwise be emailed, for local
  * testing without a mail server. Never surfaced in production. */
 export function getDevVerificationLink(): string | null {
-  if (process.env.NODE_ENV === "production") return null;
+  if (env.NODE_ENV === "production") return null;
   const state = getEmailVerificationState();
   return state.pendingToken ? `/verify-email?token=${state.pendingToken}` : null;
 }

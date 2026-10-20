@@ -16,12 +16,14 @@
  * special-case server vs. client here.
  */
 import { mockApiClient } from "./mock";
+import { env } from "@/lib/env";
 import { createHttpApiClient } from "./http";
 import type { ApiClient, ApiCircle, ApiContribution, ApiPayout, ApiNotification } from "./types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-const client: ApiClient = API_URL ? createHttpApiClient(API_URL) : mockApiClient;
+const client: ApiClient =
+  env.apiAdapter === "http"
+    ? createHttpApiClient(env.NEXT_PUBLIC_API_URL)
+    : mockApiClient;
 
 export function getCircles(): Promise<ApiCircle[]> {
   return client.getCircles();
